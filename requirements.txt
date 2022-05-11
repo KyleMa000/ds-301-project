@@ -1,0 +1,8 @@
+torch
+torchvision
+matplotlib
+Pillow
+tqdm
+opencv-python
+bs4
+lxml

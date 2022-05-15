@@ -61,8 +61,9 @@ class objectDetection:
             xmin, ymin, xmax, ymax = box
 
             class_num = annotation[0]['labels'][idx].item()
-            if class_num >= 3:
+            if class_num == 0:
                 continue
+            class_num -= 1
 
             cv2.rectangle(img, (xmin, ymin), (xmax, ymax), self.color_dict[class_num], 2)
             cv2.putText(

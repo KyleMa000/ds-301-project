@@ -5,7 +5,7 @@ from utils.model_utils import get_model
 import argparse
 
 def main(mode, epoch, dataroot):
-    checkpoint_path = f'logs3/{mode}/{epoch}.pth'
+    checkpoint_path = f'logs4/{mode}/{epoch}.pth'
 
     dataset = MaskDataset(split='test', dataroot=dataroot)
     data_loader = torch.utils.data.DataLoader(dataset, batch_size=4, collate_fn=collate_fn)

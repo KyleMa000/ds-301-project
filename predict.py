@@ -57,7 +57,7 @@ def plot_image2(img, annotation):
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-img = Image.open('./data/facemask_detection/images/maksssksksss1.png').convert("RGB")
+img = Image.open('./data/facemask_detection/images/maksssksksss0.png').convert("RGB")
 img = np.asarray(img)
 
 data_transform = transforms.Compose([
@@ -68,7 +68,7 @@ img = data_transform(img)
 img = img.to(device)
 
 model = get_model(4, 'mobilenetv3')
-model.load_state_dict(torch.load('logs3/mobilenetv3/99.pth'))
+model.load_state_dict(torch.load('logs4/mobilenetv3/99.pth'))
 model.eval()
 model.to(device)
 

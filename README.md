@@ -1,6 +1,25 @@
 # NYU US-UA 301 Final Project
 A real time face mask detector based on fine-tuned Faster R-CNN model.  
+We fine-tuned the Faster R-CNN model trained on the COCO dataset, with two versions of using `MobileNetV3` and `ResNet50` as the backbone.  
+Our models are able to detect `mask wear correcly`, `mask wear incorrectly`, and `no mask wear` in real time.  
+We also made a webapp to give a demo of our model - `MobileNetV3`. Please see details at `./webapp`.
 
+## Code structure
+```
+├── datasets/ # pytorch Dataset for the kaggle face mask dataset
+├── utils/
+|   ├── eval_utils.py # the utils for evaluating mAP
+|   ├── model_utils.py # the utils for loading model
+|   ├── LIDAR_TOP_id_2 # top lidar data for the top camera, agent 2
+├── webapp/ # the directory for the webapp
+|   ├── app.py # the webapp
+|   ...
+├── train.py # the training script
+├── eval.py # the evaluation script for mAP
+├── predict.py # make a single image prediction and draw the bounding box
+├── inference_time.py # the inference time script
+├── train_resnet50.sbatch # the SLURM script to train resnet50 on NYU HPC
+```
 ## Data preparation  
 Download the dataset from [Face Mask Detection | Kaggle](https://www.kaggle.com/datasets/andrewmvd/face-mask-detection)
 
@@ -62,7 +81,10 @@ python inference_time.py --mode [mobilenetv3 / resnet50] --epoch 99 --dataroot /
 | 0.90    | 0.028 |
 | 0.95    | 0.001 |
 
-
+Observation:  
+ResNet50 has a slightly better mAP than MobilNetV3.  
+However, it is 3x slower than MobilNetV3 during inference.  
+Since there is not a marginal difference of the mAP between `MobilNetV3` and `ResNet50`, we prefer `MobilNetV3`.
 ## Webapp
 check `./webapp` for the documentation of web app.
 

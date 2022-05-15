@@ -67,6 +67,6 @@ python inference_time.py --mode [mobilenetv3 / resnet50] --epoch 99 --dataroot /
 check `./webapp` for the documentation of web app.
 
 ## Acknowledgement
-Transfer learning: https://pytorch.org/tutorials/intermediate/torchvision_tutorial.html
+Transfer learning: https://pytorch.org/tutorials/intermediate/torchvision_tutorial.html  
 Training code reference: https://www.kaggle.com/code/daniel601/pytorch-fasterrcnn  
-mAP code reference: https://www.kaggle.com/code/franciscop9/facemaskdetection-pytorch-faster-r-cnn 
+mAP code reference: https://www.kaggle.com/code/franciscop9/facemaskdetection-pytorch-faster-r-cnn   

@@ -6,22 +6,30 @@ from torchvision import transforms
 
 
 class MaskDataset(object):
-    def __init__(self, split):
+    def __init__(self, split, dataroot, test_size=0.2):
         self.transforms = transforms.Compose([
             transforms.ToTensor(), 
         ])
         # load all image files, sorting them to
         # ensure that they are aligned
         self.split = split
-        self.imgs = list(sorted(os.listdir(f"data/facemask_detection/{split}/images")))
+        self.dataroot = dataroot
+        img_names = list(sorted(os.listdir(f"{dataroot}/images")))
+        self.test_start_idx = int(len(img_names) * (1 - test_size))
+        if split == 'train':
+            self.imgs = img_names[:self.test_start_idx]
+        elif split == 'test':
+            self.imgs = img_names[self.test_start_idx:]
+        else:
+            raise NotImplementedError(f'split {split} not implemented.')
 
     def __getitem__(self, idx):
-        idx += 0 if self.split == 'train' else 683 # test set idx start from 683
+        idx += 0 if self.split == 'train' else self.test_start_idx # test set idx start from 683
         # load images ad masks
         file_image = 'maksssksksss'+ str(idx) + '.png'
         file_label = 'maksssksksss'+ str(idx) + '.xml'
-        img_path = os.path.join(f"data/facemask_detection/{self.split}/images/", file_image)
-        label_path = os.path.join(f"data/facemask_detection/{self.split}/annotations/", file_label)
+        img_path = os.path.join(f"{self.dataroot}/images/", file_image)
+        label_path = os.path.join(f"{self.dataroot}/annotations/", file_label)
         img = Image.open(img_path).convert("RGB")
         #Generate Label
         target = generate_target(idx, label_path)

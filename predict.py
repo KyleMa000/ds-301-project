@@ -1,13 +1,13 @@
 import numpy as np # linear algebra
-import torchvision
-from torchvision import transforms, datasets, models
+from torchvision import transforms
 import torch
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from PIL import Image
 import matplotlib.pyplot as plt
-from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
 import matplotlib.patches as patches
 import cv2
+
+from utils.model_utils import get_model
 
 def plot_image(img_tensor, annotation):
     
@@ -55,63 +55,9 @@ def plot_image2(img, annotation):
     plt.imshow(img)
     plt.show()
 
-
-# imgs = list(sorted(os.listdir("data/facemask_detection/images/")))
-# labels = list(sorted(os.listdir("data/facemask_detection/annotations/")))
-
-# class MaskDataset(object):
-#     def __init__(self, transforms):
-#         self.transforms = transforms
-#         # load all image files, sorting them to
-#         # ensure that they are aligned
-#         self.imgs = list(sorted(os.listdir("data/facemask_detection/images/")))
-
-#     def __getitem__(self, idx):
-#         # load images ad masks
-#         file_image = 'maksssksksss'+ str(idx) + '.png'
-#         file_label = 'maksssksksss'+ str(idx) + '.xml'
-#         img_path = os.path.join("data/facemask_detection/images/", file_image)
-#         label_path = os.path.join("data/facemask_detection/annotations/", file_label)
-#         img = Image.open(img_path).convert("RGB")
-#         #Generate Label
-#         target = generate_target(idx, label_path)
-        
-#         if self.transforms is not None:
-#             img = self.transforms(img)
-
-#         return img, target
-
-#     def __len__(self):
-#         return len(self.imgs)
-
-# data_transform = transforms.Compose([
-#         transforms.ToTensor(), 
-#     ])
-
-# def collate_fn(batch):
-#     return tuple(zip(*batch))
-
-# dataset = MaskDataset(data_transform)
-# data_loader = torch.utils.data.DataLoader(dataset, batch_size=4, collate_fn=collate_fn)
-
-def get_model_instance_segmentation(num_classes):
-    # load an instance segmentation model pre-trained pre-trained on COCO
-    model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
-    # get number of input features for the classifier
-    in_features = model.roi_heads.box_predictor.cls_score.in_features
-    # replace the pre-trained head with a new one
-    model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
-
-    return model
-
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-# for imgs, annotations in data_loader:
-#         imgs = list(img.to(device) for img in imgs)
-#         annotations = [{k: v.to(device) for k, v in t.items()} for t in annotations]
-#         break
-
-img = Image.open('./data/facemask_detection/archive/maksssksksss0.png').convert("RGB")
+img = Image.open('./data/facemask_detection/images/maksssksksss1.png').convert("RGB")
 img = np.asarray(img)
 
 data_transform = transforms.Compose([
@@ -121,12 +67,12 @@ data_transform = transforms.Compose([
 img = data_transform(img)
 img = img.to(device)
 
-model2 = get_model_instance_segmentation(3)
-model2.load_state_dict(torch.load('faster_rcnn.pth'))
-model2.eval()
-model2.to(device)
+model = get_model(4, 'mobilenetv3')
+model.load_state_dict(torch.load('logs3/mobilenetv3/99.pth'))
+model.eval()
+model.to(device)
 
-pred2 = model2([img])
+pred2 = model([img])
 
 print("Predict with loaded model")
 plot_image2(img, pred2[0])

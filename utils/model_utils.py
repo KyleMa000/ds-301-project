@@ -1,7 +1,7 @@
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
-def get_model_instance_segmentation(num_classes, mode):
+def get_model(num_classes, mode):
     # load an instance segmentation model pre-trained pre-trained on COCO
     if mode == 'resnet50':
         model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)

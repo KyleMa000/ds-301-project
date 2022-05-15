@@ -10,7 +10,6 @@ We also made a webapp to give a demo of our model - `MobileNetV3`. Please see de
 ├── utils/
 |   ├── eval_utils.py # the utils for evaluating mAP
 |   ├── model_utils.py # the utils for loading model
-|   ├── LIDAR_TOP_id_2 # top lidar data for the top camera, agent 2
 ├── webapp/ # the directory for the webapp
 |   ├── app.py # the webapp
 |   ...
@@ -19,6 +18,7 @@ We also made a webapp to give a demo of our model - `MobileNetV3`. Please see de
 ├── predict.py # make a single image prediction and draw the bounding box
 ├── inference_time.py # the inference time script
 ├── train_resnet50.sbatch # the SLURM script to train resnet50 on NYU HPC
+|   ...
 ```
 ## Data preparation  
 Download the dataset from [Face Mask Detection | Kaggle](https://www.kaggle.com/datasets/andrewmvd/face-mask-detection)

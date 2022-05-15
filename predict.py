@@ -41,15 +41,19 @@ def plot_image2(img, annotation):
         box = box.detach().cpu().numpy()
         xmin, ymin, xmax, ymax = box
 
-        cv2.rectangle(img, (xmin, ymin), (xmax, ymax), (255,0,0), 1)
+        label_color_map = [[0,0,255], [255,0,0],[0,255,0]]
+        label_name_map = ['without', 'with', 'incorrect']
+        label_id = int(annotation["labels"][idx].item()) - 1
+
+        cv2.rectangle(img, (xmin, ymin), (xmax, ymax), label_color_map[label_id], 2)
         cv2.putText(
                 img,
-                str(annotation["labels"][idx].item()),
+                label_name_map[label_id],
                 (round(xmin), round(ymin) - 10),
                 cv2.FONT_HERSHEY_SIMPLEX,
-                0.3,
-                (255, 255, 255),
-                1,
+                0.5,
+                label_color_map[label_id],
+                2,
             )
         
     plt.imshow(img)
@@ -57,7 +61,7 @@ def plot_image2(img, annotation):
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-img = Image.open('./data/facemask_detection/images/maksssksksss0.png').convert("RGB")
+img = Image.open('./data/facemask_detection/images/maksssksksss1.png').convert("RGB")
 img = np.asarray(img)
 
 data_transform = transforms.Compose([

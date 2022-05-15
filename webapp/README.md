@@ -20,7 +20,7 @@ socketio.run(app, host='0.0.0.0', port=5000)
 ```
 
 ## Download MobileNetV3 weights
-Download from [Google Drive](https://drive.google.com/file/d/1GAkFJewmuDRasZ7XGh4SxlP4Z8gNxeka/view?usp=sharing)
+Download from [Google Drive](https://drive.google.com/file/d/1O6JqKvbQzk6ioCM3j0_fBmOYnhuDEr-g/view?usp=sharing)
 
 ## Start web app
 ```python

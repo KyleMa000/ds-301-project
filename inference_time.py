@@ -1,14 +1,17 @@
+# get inference time
+
 import torch
-from utils.eval_utils import evaluate
 from datasets.mask_dataset import MaskDataset, collate_fn
 from utils.model_utils import get_model
 import argparse
+from tqdm import tqdm
+from time import time
 
 def main(mode, epoch, dataroot):
     checkpoint_path = f'logs3/{mode}/{epoch}.pth'
 
     dataset = MaskDataset(split='test', dataroot=dataroot)
-    data_loader = torch.utils.data.DataLoader(dataset, batch_size=4, collate_fn=collate_fn)
+    data_loader_test = torch.utils.data.DataLoader(dataset, batch_size=1, collate_fn=collate_fn)
 
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
@@ -17,7 +20,16 @@ def main(mode, epoch, dataroot):
     model.eval()
     model.to(device)
 
-    evaluate(model, data_loader, device=device)
+    start_time = time()
+    model.eval()
+    with torch.no_grad():
+        for imgs, annotations in tqdm(data_loader_test):
+            imgs = list(img.to(device) for img in imgs)
+            annotations = [{k: v.to(device) for k, v in t.items()} for t in annotations]
+            model(imgs, annotations)
+    
+    duration = time() - start_time
+    print(f'Inference takes {duration} seconds. Performance {len(data_loader_test) / duration} FPS.')
 
 
 if __name__ == "__main__":

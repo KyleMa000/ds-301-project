@@ -1,0 +1,10 @@
+Flask==2.1.0
+Flask-SocketIO==5.1.1
+gevent==1.4.0
+python-engineio==3.8.2.post1
+python-socketio==4.5.1
+torch
+torchvision
+opencv-python==4.5.1.48
+numpy
+Pillow

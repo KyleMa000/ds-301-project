@@ -6,9 +6,7 @@ from time import time
 import os
 import argparse
 
-def main(mode, logpath, dataroot):
-    num_epochs = 100
-
+def main(mode, logpath, dataroot, num_epochs):
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     model = get_model(4, mode=mode)
     model.to(device)
@@ -92,8 +90,15 @@ if __name__ == "__main__":
         type=str,
         help="path to the dataset root",
     )
+    parser.add_argument(
+        "--epoch",
+        default=100,
+        type=int,
+        help="number of epochs",
+    )
     args = parser.parse_args()
     mode = args.mode
     logpath = args.logpath
     dataroot = args.dataroot
-    main(mode, logpath, dataroot)
+    num_epochs = args.epoch
+    main(mode, logpath, dataroot, num_epochs)

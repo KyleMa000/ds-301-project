@@ -2,7 +2,8 @@
 A real time face mask detector based on fine-tuned Faster R-CNN model.  
 We fine-tuned the Faster R-CNN model trained on the COCO dataset, with two versions of using `MobileNetV3` and `ResNet50` as the backbone.  
 Our models are able to detect `mask wear correcly`, `mask wear incorrectly`, and `no mask wear` in real time.  
-We also made a webapp to give a demo of our model - `MobileNetV3`. Please see details at `./webapp`.
+We also made a webapp to give a demo of our model - `MobileNetV3`. Please see details at `./webapp`.  
+[Presentation slides (Google slides)](https://docs.google.com/presentation/d/1tPoN7s3mpW8t46KBdZfxxvgLQ7JelQj9JMRtfdnAy0c/edit?usp=drivesdk)  
 
 ## Code structure
 ```
